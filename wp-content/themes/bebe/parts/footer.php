@@ -49,14 +49,19 @@
             <a class="top" href="#top">TOP</a>
 
             <div class="center-align cf">
-                <div class="left">&copy; 2013 BEBE. All rights reserved</div>
-
                 <?php
+                    $footerCopyright = get_field('footer_copyright', 'option');
+                ?>
+                <div class="left">
+                    <?= str_replace('%', date('Y'), $footerCopyright) ?>
+                </div>
+
+                <div class="right">
+                    <?php
                     $logoFooter = get_field('logo_footer', 'option');
 
                     if ($logoFooter) :
-                ?>
-                <div class="right">
+                    ?>
                     <a href="<?= esc_url(home_url('/')) ?>">
                         <?php $size = 'full'; // (thumbnail, medium, large, full or custom size)
                         if ($logoFooter) {
@@ -66,8 +71,8 @@
                         }
                         ?>
                     </a>
-                </div>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div
             </div>
         </div>
 
