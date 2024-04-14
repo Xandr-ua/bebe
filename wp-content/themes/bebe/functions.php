@@ -201,6 +201,12 @@ if (defined('JETPACK__VERSION')) {
     require get_template_directory() . '/inc/jetpack.php';
 }
 
+// Crop Images
+
+add_image_size('gallery_one', 222, 341, true);
+add_image_size('gallery_two', 222, 164, true);
+add_image_size('gallery_three', 456, 164, true);
+
 
 // Contact form 7 remove span and br
 
@@ -211,3 +217,23 @@ add_filter('wpcf7_form_elements', function($content) {
 
     return $content;
 });
+
+
+// Create Custom Post Type
+
+function bebe_create_post_type() {
+    register_post_type('gallery',
+    array(
+        'labels' => array(
+            'name' => __('Galleries'),
+            'singular_name' => __('Gallery'),
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'menu_position' => 20,
+        'menu_icon' => 'dashicons-format-gallery',
+        'supports' => array('title', 'editor', 'thumbnail'),
+    )
+    );
+}
+add_action('init', 'bebe_create_post_type');
