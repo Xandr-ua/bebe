@@ -12,34 +12,97 @@
             <div class="col-6 float-left">
                 <div class="col-5 information">
                     <h3>Information</h3>
-                    <a href="">About BEBE</a>
-                    <a href="">Privacy Policy</a>
-                    <a href="">Delivery</a>
-                    <a href="">Terms & Conditions</a>
+                    <?php
+                    wp_nav_menu(array(
+                        'them_location' => 'menu-footer',
+                        'menu_id'       => 'footer-menu',
+                        'menu_class'    => 'cf',
+//                        'container'     => 'nav'
+                    ));
+                    ?>
                 </div>
                 <div class="col-7 contacts">
                     <h3>Contacts</h3>
-                    <span class="tel">8 800 <strong>435-17-20</strong></span>
-                    <span>nfo@bebe.co.uk</span>
-                    <span>Germany Berlin, Main street  43</span>
+
+                    <?php
+                        $phone = get_field('phone', 'option');
+                        $email = get_field('email', 'option');
+                        $address = get_field('address', 'option');
+                    ?>
+
+                    <?php if ($phone) : ?>
+                        <span class="tel">8 800 <strong><?= esc_attr($phone); ?></strong></span>
+                    <?php endif; ?>
+
+                    <?php if ($email) : ?>
+                        <a href="mailto:<?= esc_attr($email); ?>"><span><?= esc_attr($email); ?></span></a>
+                    <?php endif; ?>
+
+                    <?php if ($address) : ?>
+                        <span><?= esc_attr($address); ?></span>
+                    <?php endif; ?>
                     <ul>
-                        <li class="facebook"><a href=""></a></li>
-                        <li class="instagram"><a href=""></a></li>
-                        <li class="pinterest"><a href=""></a></li>
-                        <li class="twitter"><a href=""></a></li>
-                        <li class="youtube"><a href=""></a></li>
+                        <?php
+                        $socialIcons = get_field('social_icons', 'option');
+
+                        $socialIconsFacebook = get_field('social_icons_facebook', 'option');
+
+                        $socialIconsInstagram = get_field('social_icons_instagram', 'option');
+
+                        $socialIconsPinterest = get_field('social_icons_pinterest', 'option');
+
+                        $socialIconsTwitter = get_field('social_icons_twitter', 'option');
+
+                        $socialIconsYoutube = get_field('social_icons_youtube', 'option');
+
+                        ?>
+
+                        <?php
+
+                        if ($socialIconsFacebook) :
+                            $socialIconsFacebookUrl = $socialIconsFacebook['url'];
+                            ?>
+                            <li class="facebook"><a href="<?= esc_url($socialIconsFacebookUrl); ?>"></a></li>
+                        <?php endif; ?>
+
+                        <?php
+
+                        if ($socialIconsInstagram) :
+                            $socialIconsInstagramUrl = $socialIconsInstagram['url'];
+                            ?>
+                            <li class="instagram"><a href="<?= esc_url($socialIconsInstagramUrl); ?>"></a></li>
+                        <?php endif; ?>
+
+                        <?php
+
+                        if ($socialIconsPinterest) :
+                            $socialIconsPinterestUrl = $socialIconsPinterest['url'];
+                            ?>
+                            <li class="pinterest"><a href="<?= esc_url($socialIconsPinterestUrl); ?>"></a></li>
+                        <?php endif; ?>
+
+                        <?php
+
+                        if ($socialIconsTwitter) :
+                            $socialIconsTwitterUrl = $socialIconsTwitter['url'];
+                            ?>
+                            <li class="twitter"><a href="<?= esc_url($socialIconsTwitterUrl); ?>"></a></li>
+                        <?php endif; ?>
+
+                        <?php
+                        if ($socialIconsYoutube) :
+                            $socialIconsYoutubeUrl = $socialIconsYoutube['url'];
+                            ?>
+                            <li class="youtube"><a href="<?= esc_url($socialIconsYoutubeUrl); ?>"></a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
 
             <!-- Form -->
             <div class="form float-right">
-                <form class="cf" method="post" id="contact-form">
-                    <input id="name" name="name" type="text" placeholder="Name"/>
-                    <input id="email" name="email" type="text" placeholder="Email"/>
-                    <textarea id="message" name="subject" placeholder="Message"></textarea>
-                    <input id="submit" type="submit" value="Send"/>
-                </form>
+                <?= do_shortcode('[contact-form-7 id="6bfe113"]'); ?>
+
             </div>
 
         </div>

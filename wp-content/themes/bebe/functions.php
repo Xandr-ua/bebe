@@ -51,6 +51,7 @@ function bebe_setup()
     register_nav_menus(
         array(
             'menu-1' => esc_html__('Primary', 'bebe'),
+            'menu-footer' => esc_html__('Footer menu', 'bebe'),
         )
     );
 
@@ -140,20 +141,6 @@ function bebe_widgets_init()
 
 add_action('widgets_init', 'bebe_widgets_init');
 
-/**
- * Enqueue scripts and styles.
- */
-//function bebe_scripts() {
-//	wp_enqueue_style( 'bebe-style', get_stylesheet_uri(), array(), _S_VERSION );
-//	wp_style_add_data( 'bebe-style', 'rtl', 'replace' );
-//
-//	wp_enqueue_script( 'bebe-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
-//
-//	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-//		wp_enqueue_script( 'comment-reply' );
-//	}
-//}
-//add_action( 'wp_enqueue_scripts', 'bebe_scripts' );
 
 /**
  * Enqueue styles.
@@ -214,3 +201,13 @@ if (defined('JETPACK__VERSION')) {
     require get_template_directory() . '/inc/jetpack.php';
 }
 
+
+// Contact form 7 remove span and br
+
+add_filter('wpcf7_form_elements', function($content) {
+    $content = preg_replace('/<(span).*?class="\s*(?:.*\s)?wpcf7-form-control-wrap(?:\s[^"]+)?\s*"[^\>]*>(.*)<\/\1>/i', '\2', $content);
+
+    $content = str_replace('<br />', '', $content);
+
+    return $content;
+});
